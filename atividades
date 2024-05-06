@@ -1,0 +1,939 @@
+-Funções e ponteiros:
+// O máximo divisor comum de três números inteiros positivos, MDC(x,y,z), é igual a MDC(MDC(x,y),z).
+// Escreva um programa que capture três números inteiros fornecidos via teclado e imprima o MDC deles, usando a função MDC apresentada no texto.
+
+int mdc (int x, int y){
+    while (y != 0) {
+        int temp = y;
+        y = x % y;
+        x = temp;
+    }
+    return x;
+}
+
+int mdc_tres_numeros(int x, int y, int z) {
+    return mdc(mdc(x, y), z);
+}
+int main(){
+    int a, b, c;
+    printf("Escreva o primeiro, o segundo e o terceiro numeros: \n");
+    scanf("%d %d %d", &a, &b, &c);
+    int result = mdc_tres_numeros(a, b, c);
+    printf("o mdc dos 3 numeros e: %d", result);
+
+
+    return 0;
+}
+
+-vetores:
+#include <stdio.h>
+
+//Escreva uma função que receba como parâmetro um vetor de números inteiros de tamanho n e retorne quantos números pares estão armazenados nesse vetor. 
+//Essa função deve obedecer ao protótipo a seguir. Escreva um programa para testar sua função.
+
+int pares (int n, int * vet){
+    int count = 0;
+    for(int i=0; i < n; i++){
+        if (vet[i] % 2 == 0){
+            count++;
+        }
+    }
+    return count;
+}
+
+int main(){
+    int v[5]= {2, 3, 4, 5, 6};
+
+    printf("a quantidade de numeros armazenados pares e de: %d", pares(5, v));
+    return 0;
+}
+
+----------------------------------------------------------------------
+
+//Implemente uma função que receba como parâmetro um vetor de números inteiros de tamanho n e inverta a ordem dos elementos armazenados nesse vetor. 
+//Essa função deve obedecer ao protótipo a seguir. Escreva um programa para testar sua função.
+
+void inverte (int n, int * vet){
+    int i = 0;
+    int ajd = n - 1;
+         
+            while(ajd>i){
+            int aux = vet[i];
+            vet[i] = vet[ajd];
+            vet[ajd] = aux;
+            i++;
+            ajd--;
+            }
+}
+
+int main(){
+    int v[5] = {1, 2, 3, 4, 5};
+        printf("v = {");
+        for (int i = 0; i < 5; i++) {
+            printf("%d", v[i]);
+            if (i < 4) {
+                printf(", ");
+        }   
+        }
+        printf("}\n");
+    inverte(5, v);
+    printf("v = {");
+        for (int i = 0; i < 5; i++) {
+            printf("%d", v[i]);
+            if (i < 4) {
+                printf(", ");
+        }   
+        }
+        printf("}\n");
+    return 0;
+}
+
+-----------------------------------------------------------------------
+//Escreva uma função que retorne o valor mínimo armazenado em um vetor.
+//Essa função deve obedecer ao protótipo a seguir. Escreva um programa para testar sua função.
+
+float minimo (int n, float *v){
+    int min = v[0];
+    for(int i = 0; i < n; i++){
+        if (v[i] < min ){
+            min = v[i];
+        }
+    }
+    return min;
+}
+
+int main(){
+    float v[5]= {4, 3, 2, 5, 6};
+
+    printf("o valor minimo no vetor e: %f", minimo(5, v));
+    return 0;
+}
+
+
+-----------------------------------------------------------------------
+
+//Implemente uma função que receba como parâmetros um vetor de números inteiros v e seu número de elementos n, e verifique se os elementos do vetor correspondem
+// aos termos de uma PA (progressão aritmética), isto é, se existe um número inteiro k tal que v[i] seja igual a v [0] + i*k. 
+//Caso os elementos do vetor correspondam aos termos de uma PA, a função deve retornar o valor calculado para k. 
+//Por exemplo, se for passado para essa função o vetor {2,10,18,26,34} , ela deve retornar o valor 8. Caso o vetor não corresponda a uma PA, a função deve retornar 0. 
+//Assuma que o vetor sempre terá pelo menos três elementos. Tal função deve ter o seguinte protótipo:
+
+// Função para verificar se os elementos do vetor correspondem a uma PA
+int testa_PA(int n, int *v) {
+    // Calcula a diferença entre o segundo e o primeiro elemento
+    int k = v[1] - v[0];
+    
+    // Verifica se os elementos do vetor correspondem a uma PA
+    for (int i = 2; i < n; i++) {
+        if (v[i] != v[0] + i * k) {
+            // Se algum elemento não corresponder, não é uma PA
+            return 0;
+        }
+    }
+    
+    // Se todos os elementos corresponderem, é uma PA, retorna a diferença
+    return k;
+}
+
+int main() {
+    int n;
+    
+    // Solicita ao usuário o tamanho do vetor
+    printf("Digite o tamanho do vetor (pelo menos 3 elementos): ");
+    scanf("%d", &n);
+    
+    // Cria um vetor de tamanho n
+    int vetor[n];
+    
+    // Solicita ao usuário os elementos do vetor
+    printf("Digite os elementos do vetor:\n");
+    for (int i = 0; i < n; i++) {
+        printf("Elemento %d: ", i + 1);
+        scanf("%d", &vetor[i]);
+    }
+    
+    // Chama a função testa_PA para verificar se é uma PA e retorna o valor de k
+    int k = testa_PA(n, vetor);
+    
+    if (k != 0) {
+        printf("O vetor corresponde a uma PA com k = %d\n", k);
+    } else {
+        printf("O vetor não corresponde a uma PA.\n");
+    }
+
+    return 0;
+}
+
+-----------------------------------------------------------------------
+
+//Considere histogramas como sendo o número de ocorrências de valores em diferentes intervalos. 
+//Considere ainda um experimento laboratorial em que foram colhidos n medições, todas elas maiores ou iguais a 0 e menores que 1. 
+//Escreva uma função para preencher um vetor com 10 elementos que represente o histograma destas medidas. 
+//O primeiro elemento do vetor deve armazenar o número de medidas maiores ou iguais a 0 e menores que 0.1, 
+//o segundo elemento deve armazenar o número de medidas maiores ou iguais a 0.1 e menores que 0.2 e assim por diante.
+
+//A função deve receber o vetor, v, com as n medidas do experimento e deve preencher o vetor h que, sabe-se, tem dimensão igual a 10. 
+//Por exemplo, se for passado como entrada o vetor:
+
+//v = {0.11, 0.2, 0.03, 0.56, 0.323, 0.345, 0.234, 0.56, 0.6546, 0.123, 0.123, 0.999}
+
+//a função deve preencher o, vetor h como: h = {1, 3, 2, 2, 0, 2, 1, 0, 0, 1} A função deve seguir o protótipo:
+
+void histograma(int n, float *v, int *h) {
+    // Inicializa o vetor de histograma com zeros
+    for (int i = 0; i < 10; i++) {
+        h[i] = 0;
+    }
+    
+    // Preenche o vetor de histograma
+    for (int i = 0; i < n; i++) {
+        // Calcula o índice do vetor de histograma onde a medida pertence
+        int indice = (int)(v[i] * 10);
+        
+        // Incrementa o contador no índice apropriado
+        h[indice]++;
+    }
+}
+
+int main() {
+    // Vetor de medidas do experimento
+    float v[] = {0.11, 0.2, 0.03, 0.56, 0.323, 0.345, 0.234, 0.56, 0.6546, 0.123, 0.123, 0.999};
+    int n = sizeof(v) / sizeof(v[0]); // Tamanho do vetor de medidas
+    
+    // Vetor de histograma
+    int h[10];
+    
+    // Preenche o vetor de histograma com base nas medidas do experimento
+    histograma(n, v, h);
+    
+    // Imprime o vetor de histograma
+    printf("Histograma:\n");
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", h[i]);
+    }
+    printf("\n");
+    
+    return 0;
+}
+
+-----------------------------------------------------------------------
+
+Escreva uma função que verifique se uma matriz quadrada de dimensão N x N, onde N representa uma constante simbólica, é uma matriz triangular inferior. Numa matriz triangular inferior, todos os elementos acima da diagonal principal são iguais a 0.0. Os elementos da diagonal ou abaixo da diagonal podem assumir valores quaisquer. A função deve retornar 1 se a matriz dada for triangular inferior e 0 caso contrário, e deve seguir o seguinte protótipo:
+
+#include <stdio.h>
+
+#define N 3 // Definindo N como uma constante simbólica para uma matriz 3x3, por exemplo
+
+int triangular_inferior(double A[][N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = i + 1; j < N; j++) {
+            // Verifica se há algum elemento acima da diagonal principal diferente de zero
+            if (A[i][j] != 0.0) {
+                return 0; // Não é uma matriz triangular inferior
+            }
+        }
+    }
+    return 1; // É uma matriz triangular inferior
+}
+
+int main() {
+    double matriz[N][N] = {
+        {1.0, 0.0, 0.0},
+        {2.0, 3.0, 0.0},
+        {4.0, 5.0, 6.0}
+    };
+    
+    // Verifica se a matriz é triangular inferior
+    if (triangular_inferior(matriz)) {
+        printf("A matriz é triangular inferior.\n");
+    } else {
+        printf("A matriz não é triangular inferior.\n");
+    }
+    
+    return 0;
+}
+
+-----------------------------------------------------------------------
+
+Escreva uma função que verifique se uma matriz quadrada de dimensão N x N, onde N representa uma constante simbólica, é uma matriz identidade. Numa matriz identidade, os elementos da diagonal principal são iguais a 1.0 e os demais são iguais a 0.0. A função deve retornar 1 se a matriz dada for identidade e 0 caso contrário, e deve seguir o seguinte protótipo:
+
+int identidade ( double A[][N]);
+
+#include <stdio.h>
+
+#define N 3 // Definindo N como uma constante simbólica para uma matriz 3x3, por exemplo
+
+int identidade(double A[][N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (i == j) {
+                // Verifica se os elementos da diagonal principal são iguais a 1.0
+                if (A[i][j] != 1.0) {
+                    return 0; // Não é uma matriz identidade
+                }
+            } else {
+                // Verifica se os elementos fora da diagonal principal são iguais a 0.0
+                if (A[i][j] != 0.0) {
+                    return 0; // Não é uma matriz identidade
+                }
+            }
+        }
+    }
+    return 1; // É uma matriz identidade
+}
+
+int main() {
+    double matriz[N][N] = {
+        {1.0, 0.0, 0.0},
+        {0.0, 1.0, 0.0},
+        {0.0, 0.0, 1.0}
+    };
+    
+    // Verifica se a matriz é uma matriz identidade
+    if (identidade(matriz)) {
+        printf("A matriz é uma matriz identidade.\n");
+    } else {
+        printf("A matriz não é uma matriz identidade.\n");
+    }
+    
+    return 0;
+}
+
+-----------------------------------------------------------------------
+
+
+Escreva uma função que, dadas duas matrizes quadradas, A e B, verifique se B é a inversa de A, isto é, se B é igual a A−1. Se B for a inversa, a multiplicação de A por B resulta numa matriz identidade. A função deve retornar 1 se B é a inversa de A e 0 caso contrário, e deve seguir o seguinte protótipo:
+
+#include <stdio.h>
+
+#define N 3 // Definindo N como uma constante simbólica para uma matriz 3x3, por exemplo
+
+int identidade(double A[][N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            // Verifica se os elementos fora da diagonal principal são diferentes de zero
+            if ((i != j && A[i][j] != 0.0) || (i == j && A[i][j] != 1.0)) {
+                return 0; // Não é uma matriz identidade
+            }
+        }
+    }
+    return 1; // É uma matriz identidade
+}
+
+int inversa(double A[][N], double B[][N]) {
+    double resultado[N][N]; // Matriz para armazenar o resultado da multiplicação
+    
+    // Inicializa o resultado com zeros
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            resultado[i][j] = 0.0;
+        }
+    }
+    
+    // Multiplica as matrizes A e B e armazena o resultado em 'resultado'
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            for (int k = 0; k < N; k++) {
+                resultado[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+    
+    // Verifica se o resultado da multiplicação é uma matriz identidade
+    if (identidade(resultado)) {
+        return 1; // B é a inversa de A
+    } else {
+        return 0; // B não é a inversa de A
+    }
+}
+
+int main() {
+    double A[N][N] = {
+        {2.0, 1.0, 1.0},
+        {1.0, 2.0, 1.0},
+        {1.0, 1.0, 2.0}
+    };
+    double B[N][N] = {
+        {0.6, -0.2, -0.2},
+        {-0.2, 0.6, -0.2},
+        {-0.2, -0.2, 0.6}
+    };
+    
+    // Verifica se B é a inversa de A
+    if (inversa(A, B)) {
+        printf("B é a inversa de A.\n");
+    } else {
+        printf("B não é a inversa de A.\n");
+    }
+    
+    return 0;
+}
+
+-----------------------------------------------------------------------
+
+
+Alocação: 
+
+//Escreva uma função que receba um vetor de números reais e tenha como valor de retorno um novo vetor, alocado dinamicamente, 
+//com os elementos do vetor original em ordem reversa. A função deve ter como valor de retorno o ponteiro do vetor alocado, seguindo o protótipo:
+
+float * reverso (int n, float * v){
+   float *vet = calloc(n, sizeof(float));
+    float aux = 0;
+    int ajd = n - 1;
+        for(int i = 0; i<n; i++){
+            aux = v[i];
+            vet[ajd] = aux; 
+            ajd--;
+
+
+        }
+
+    return vet;
+}
+
+
+int main(){
+    float v[5]= {4, 3, 2, 5, 6};
+
+    float *vet = reverso(5, v);
+    printf("o vetor reverso é: {");
+    for(int j = 0; j<5; j++){
+        printf("%f, ", vet[j]);
+    }
+    printf("}");
+  free(vet);
+    return 0;
+}
+
+-----------------------------------------------------------------------
+
+
+//Escreva uma função que receba um vetor de inteiros e tenha como valor de retorno um novo vetor, alocado dinamicamente, 
+//apenas com os elementos pares do vetor original. A função deve ter como valor de retorno o ponteiro do vetor alocado e 
+//preencher o endereço de memória passado com a dimensão do novo vetor, seguindo o protótipo:
+
+int* somente_pares (int n, int * v){
+    int *vet = calloc(n, sizeof(int));
+    int aux = 0;
+    for(int i = 0; i<n; i++){
+        if(v[i]%2 == 0){
+           vet[aux] = v[i];
+           aux ++; 
+        }
+    }
+    return vet;
+}
+
+
+int main(){
+    int v[5]= {4, 3, 2, 5, 6};
+
+    int *vet = somente_pares(5, v);
+    printf("o vetor de pares e: {");
+    for(int j = 0; j<5; j++){
+        printf("%d, ", vet[j]);
+    }
+    printf("}");
+    free(vet);
+    return 0;
+}
+
+-----------------------------------------------------------------------
+
+Escreva funções para lidar com matrizes triangulares inferiores de dimensão n × n, onde todos os elementos abaixo da diagonal são iguais a zero e não devem ser alocados. No entanto, um acesso a um elemento abaixo da diagonal deve retornar o valor zero. Escreva as seguintes funções, usando a estratégia de vetor de ponteiros para armazenar a matriz.
+
+(a)Função para criar uma matriz, onde n representa a dimensão da matriz, inicialmente com os valores todos iguais a zero:
+
+float ** ti_cria (int n);
+
+(b)Função para atribuir o valor de um elemento da matriz, assumindo que i >= j:
+
+void ti_atribui (int i, int j, float x);
+
+(c)Função para acessar o valor de um elemento da matriz, inclusive elementos acima da diagonal:
+
+float ti_acessa (int i, int j);
+
+(d)Função para liberar a memória da matriz alocada:
+
+void ti_libera (int n, float ** mat);
+
+Escreva uma função main para testar as funções implementadas.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Função para criar uma matriz triangular inferior de dimensão n x n, inicializada com zeros
+float **ti_cria(int n) {
+    // Alocando memória para o vetor de ponteiros
+    float **mat = (float **)malloc(n * sizeof(float *));
+    if (mat == NULL) {
+        printf("Erro ao alocar memória.\n");
+        exit(1);
+    }
+
+    // Alocando memória para cada linha da matriz
+    for (int i = 0; i < n; i++) {
+        mat[i] = (float *)calloc(n, sizeof(float));
+        if (mat[i] == NULL) {
+            printf("Erro ao alocar memória.\n");
+            exit(1);
+        }
+    }
+
+    return mat;
+}
+
+// Função para atribuir o valor de um elemento da matriz
+void ti_atribui(int i, int j, float x, float **mat) {
+    if (i >= j) {
+        mat[i][j] = x;
+    }
+}
+
+// Função para acessar o valor de um elemento da matriz
+float ti_acessa(int i, int j, float **mat, int n) {
+    if (i >= j) {
+        return mat[i][j];
+    } else {
+        return 0.0; // Retorna zero para elementos abaixo da diagonal
+    }
+}
+
+// Função para liberar a memória alocada para a matriz
+void ti_libera(int n, float **mat) {
+    // Liberando memória de cada linha da matriz
+    for (int i = 0; i < n; i++) {
+        free(mat[i]);
+    }
+    // Liberando memória do vetor de ponteiros
+    free(mat);
+}
+
+int main() {
+    int n = 3; // Dimensão da matriz
+
+    // Criando a matriz triangular inferior inicializada com zeros
+    float **mat = ti_cria(n);
+
+    // Atribuindo valores a alguns elementos da matriz
+    ti_atribui(0, 0, 1.0, mat);
+    ti_atribui(1, 0, 2.0, mat);
+    ti_atribui(2, 1, 3.0, mat);
+
+    // Imprimindo os elementos da matriz
+    printf("Matriz:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%.2f ", ti_acessa(i, j, mat, n));
+        }
+        printf("\n");
+    }
+
+    // Liberando a memória alocada para a matriz
+    ti_libera(n, mat);
+
+    return 0;
+}
+
+-----------------------------------------------------------------------
+
+Escreva:
+
+(a)Uma função para converter uma matriz representada por um vetor numa matriz representada por um vetor de ponteiros:
+
+float ** converte_a (int m, int n, float * mat);
+
+(b)Uma função para converter uma matriz representada por um vetor de ponteiros numa matriz representada por um vetor:
+
+float * converte_b (int m, int n, float ** mat);
+
+Escreva também as funções para criar as matrizes e implemente uma função main para testar as conversões.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Função para criar uma matriz representada por um vetor de ponteiros
+float **cria_matriz_a(int m, int n, float *mat) {
+    float **matriz = (float **)malloc(m * sizeof(float *));
+    if (matriz == NULL) {
+        printf("Erro ao alocar memória.\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < m; i++) {
+        matriz[i] = (float *)malloc(n * sizeof(float));
+        if (matriz[i] == NULL) {
+            printf("Erro ao alocar memória.\n");
+            exit(1);
+        }
+        for (int j = 0; j < n; j++) {
+            matriz[i][j] = mat[i * n + j];
+        }
+    }
+
+    return matriz;
+}
+
+// Função para criar uma matriz representada por um vetor
+float *cria_matriz_b(int m, int n, float **mat) {
+    float *vetor = (float *)malloc(m * n * sizeof(float));
+    if (vetor == NULL) {
+        printf("Erro ao alocar memória.\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            vetor[i * n + j] = mat[i][j];
+        }
+    }
+
+    return vetor;
+}
+
+// Função para converter uma matriz representada por um vetor numa matriz representada por um vetor de ponteiros
+float **converte_a(int m, int n, float *mat) {
+    float **matriz = cria_matriz_a(m, n, mat);
+    return matriz;
+}
+
+// Função para converter uma matriz representada por um vetor de ponteiros numa matriz representada por um vetor
+float *converte_b(int m, int n, float **mat) {
+    float *vetor = cria_matriz_b(m, n, mat);
+    return vetor;
+}
+
+// Função para liberar a memória alocada para a matriz
+void libera_matriz(int m, float **mat) {
+    for (int i = 0; i < m; i++) {
+        free(mat[i]);
+    }
+    free(mat);
+}
+
+int main() {
+    int m = 3; // Número de linhas
+    int n = 2; // Número de colunas
+
+    // Vetor representando uma matriz
+    float *matriz_vetor = (float *)malloc(m * n * sizeof(float));
+    if (matriz_vetor == NULL) {
+        printf("Erro ao alocar memória.\n");
+        return 1;
+    }
+    // Inicializando o vetor
+    for (int i = 0; i < m * n; i++) {
+        matriz_vetor[i] = i + 1;
+    }
+
+    // Convertendo a matriz representada pelo vetor para uma matriz representada por um vetor de ponteiros
+    float **matriz_a = converte_a(m, n, matriz_vetor);
+
+    // Imprimindo a matriz representada por um vetor de ponteiros
+    printf("Matriz A:\n");
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%.2f ", matriz_a[i][j]);
+        }
+        printf("\n");
+    }
+
+    // Convertendo a matriz representada por um vetor de ponteiros de volta para um vetor
+    float *matriz_vetor_b = converte_b(m, n, matriz_a);
+
+    // Imprimindo o vetor representando a matriz
+    printf("\nVetor da matriz B:\n");
+    for (int i = 0; i < m * n; i++) {
+        printf("%.2f ", matriz_vetor_b[i]);
+    }
+    printf("\n");
+
+    // Liberando a memória alocada
+    free(matriz_vetor);
+    free(matriz_vetor_b);
+    libera_matriz(m, matriz_a);
+
+    return 0;
+}
+
+-----------------------------------------------------------------------
+
+Considerando uma estrutura para representar um ponto no espaço 2D, implemente uma função que indique se um ponto p está localizado dentro ou fora de um retângulo. O retângulo é definido por seus vértices inferior esquerdo v1 e superior direito v2. A função deve retornar 1, caso o ponto esteja localizado dentro do retângulo, e 0, caso contrário. Essa função deve obedecer ao protótipo:
+
+typedef struct ponto{
+    int x;
+    int y;
+}Ponto;
+
+int dentroRet (Ponto* v1 , Ponto* v2 , Ponto* p){
+    if (p->x >= v1->x && p->x <= v2->x && p->y >= v1->y && p->y <= v2->y)
+        return 1;
+    else
+        return 0;
+}
+
+int main() {
+
+    Ponto v1 = {2.0, 2.0}; 
+    Ponto v2 = {5.0, 5.0}; 
+
+    
+    Ponto p = {3.0, 4.0}; 
+    
+    if (dentroRet(&v1, &v2, &p)) {
+        printf("O ponto está dentro do retângulo.\n");
+    } else {
+        printf("O ponto está fora do retângulo.\n");
+    }
+
+    return 0;
+}
+
+-----------------------------------------------------------------------
+
+// Considerando uma estrutura para representar um vetor no espaço 3D, implemente uma função que calcule o produto escalar de dois vetores. 
+// Essa função deve obedecer ao protótipo:
+
+typedef struct vetor{
+    int x;
+    int y;
+    int z;
+}Vetor;
+
+int escalar (Vetor* v1 , Vetor* v2 ){
+    return v1->x*v2->x + v1->y*v2->y + v1->z*v2->z;
+}
+
+
+
+int main(){
+    Vetor v1 = {2, 5, 3};
+    Vetor v2 = {3, 5, 2};
+    printf("o produto escalar de v1 e v2 é: %d", escalar(&v1, &v2));
+}
+
+-----------------------------------------------------------------------
+Defina estruturas para representar retângulos (dados a base e a altura) e círculos (dado o raio), e implemente as funções a seguir:
+
+(a)Dado um círculo, crie e retorne o maior retângulo circunscrito de altura h; considere que h é menor do que o diâmetro do círculo:
+
+Ret* ret_circunscrito (Circ* c, float h);
+
+(b)Dado um retângulo, crie e retorne o maior círculo interno ao retângulo:
+
+Circ* circ_interno (Ret *r);
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definição da estrutura para representar um retângulo
+typedef struct {
+    float base;
+    float altura;
+} Retangulo;
+
+// Definição da estrutura para representar um círculo
+typedef struct {
+    float raio;
+} Circulo;
+
+// Definição da estrutura para representar um ponto
+typedef struct {
+    float x;
+    float y;
+} Ponto;
+
+// Definição da estrutura para representar um retângulo com coordenadas
+typedef struct {
+    Ponto superior_esquerdo;
+    Ponto inferior_direito;
+} RetanguloCoordenado;
+
+// Função para criar e retornar o maior retângulo circunscrito de altura h
+Retangulo ret_circunscrito(Circulo *c, float h) {
+    Retangulo ret;
+    // O maior retângulo circunscrito tem base igual ao diâmetro do círculo
+    ret.base = 2 * c->raio;
+    // A altura do retângulo é a altura especificada na função
+    ret.altura = h;
+    return ret;
+}
+
+// Função para criar e retornar o maior círculo interno ao retângulo
+Circulo circ_interno(Retangulo *r) {
+    Circulo circ;
+    // O maior círculo interno a um retângulo tem raio igual à metade do menor lado do retângulo
+    float menor_lado = (r->base < r->altura) ? r->base : r->altura;
+    circ.raio = menor_lado / 2;
+    return circ;
+}
+
+int main() {
+    // Exemplo de uso das funções
+
+    // Criando um círculo com raio 5
+    Circulo circulo_exemplo;
+    circulo_exemplo.raio = 5;
+
+    // Criando o maior retângulo circunscrito ao círculo com altura 4
+    Retangulo retangulo_circunscrito = ret_circunscrito(&circulo_exemplo, 4);
+    printf("Maior retangulo circunscrito ao circulo: Base = %.2f, Altura = %.2f\n", retangulo_circunscrito.base, retangulo_circunscrito.altura);
+
+    // Criando um retângulo com base 10 e altura 6
+    Retangulo retangulo_exemplo;
+    retangulo_exemplo.base = 10;
+    retangulo_exemplo.altura = 6;
+
+    // Criando o maior círculo interno ao retângulo
+    Circulo circulo_interno = circ_interno(&retangulo_exemplo);
+    printf("Maior circulo interno ao retangulo: Raio = %.2f\n", circulo_interno.raio);
+
+    return 0;
+}
+
+-----------------------------------------------------------------------
+
+Considerando as declarações a seguir para representar o cadastro de alunos de uma disciplina, implemente uma função que exiba na tela o número de matrícula, o nome, a turma e a média de todos os alunos que foram aprovados na disciplina.
+
+typedef struct aluno Aluno;
+
+struct aluno {
+
+char nome[81];
+
+char matricula[8];
+
+char turma;
+
+float p1;
+
+float p2;
+
+float p3;
+
+};
+
+Assuma que o critério para aprovação é dado pela média das três provas (p1, p2 e p3). A função recebe como parâmetros o número de alunos e um vetor de ponteiros para os dados dos alunos. Essa função deve obedecer ao protótipo:
+
+void imprime_aprovados (int n, Aluno** turmas);
+
+#include <stdio.h>
+//Considerando as declarações a seguir para representar o cadastro de alunos de uma disciplina, implemente uma função que exiba na tela
+// o número de matrícula, o nome, a turma e a média de todos os alunos que foram aprovados na disciplina.
+
+typedef struct aluno{
+    char nome[81];
+    char matricula[8];
+    char turma;
+    float p1;
+    float p2;
+    float p3;
+}Aluno;
+
+//Assuma que o critério para aprovação é dado pela média das três provas (p1, p2 e p3). 
+//A função recebe como parâmetros o número de alunos e um vetor de ponteiros para os dados dos alunos. Essa função deve obedecer ao protótipo:
+
+void imprime_aprovados (int n, Aluno** turmas);
+
+float calcular_media(float p1, float p2, float p3){
+    return (p1 + p2 + p3)/3.0;
+}
+
+void imprime_aprovados(int n, Aluno** turmas) {
+    printf("Alunos Aprovados:\n");
+    for (int i = 0; i < n; i++) {
+        Aluno* aluno = turmas[i];
+        float media = calcular_media(aluno->p1, aluno->p2, aluno->p3);
+        if (media >= 7.0) { 
+            printf("Matricula: %s, Nome: %s, Turma: %c, Media: %.2f\n", aluno->matricula, aluno->nome, aluno->turma, media);
+        }
+    }
+}
+
+
+int main() {
+    
+    
+    Aluno aluno1 = {"Joao", "2021001", 'A', 7.5, 8.0, 6.5};
+    Aluno aluno2 = {"Maria", "2021002", 'B', 6.0, 7.0, 8.0};
+    Aluno aluno3 = {"Pedro", "2021003", 'A', 5.5, 6.0, 7.0};
+
+    Aluno* alunos[] = {&aluno1, &aluno2, &aluno3};
+
+    imprime_aprovados(3, alunos);
+
+    return 0;
+}
+
+-----------------------------------------------------------------------
+
+Considerando as declarações do tipo Aluno do exercício anterior, implemente uma função que tenha como valor de retorno a média final obtida pelos alunos de determinada turma. A nota final de cada aluno é dada pela média das três provas.
+
+float media_turma (int n, Aluno** turmas , char turma);
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definição da estrutura aluno
+typedef struct aluno {
+    char nome[81];
+    char matricula[8];
+    char turma;
+    float p1;
+    float p2;
+    float p3;
+} Aluno;
+
+// Protótipo da função
+float media_turma(int n, Aluno** turmas, char turma);
+
+// Função para calcular a média das notas de um aluno
+float calcular_media(float p1, float p2, float p3) {
+    return (p1 + p2 + p3) / 3.0;
+}
+
+// Função para calcular a média da turma
+float media_turma(int n, Aluno** turmas, char turma) {
+    float soma_notas = 0;
+    int contador_alunos = 0;
+
+    for (int i = 0; i < n; i++) {
+        Aluno* aluno = turmas[i];
+        if (aluno->turma == turma) {
+            float media_aluno = calcular_media(aluno->p1, aluno->p2, aluno->p3);
+            soma_notas += media_aluno;
+            contador_alunos++;
+        }
+    }
+
+    if (contador_alunos == 0) {
+        return 0; // Retorna 0 se não houver alunos na turma
+    }
+
+    return soma_notas / contador_alunos; // Retorna a média da turma
+}
+
+int main() {
+    // Exemplo de uso da função media_turma
+
+    // Definindo alguns alunos
+    Aluno aluno1 = {"Joao", "2021001", 'A', 7.5, 8.0, 6.5};
+    Aluno aluno2 = {"Maria", "2021002", 'B', 6.0, 7.0, 8.0};
+    Aluno aluno3 = {"Pedro", "2021003", 'A', 5.5, 6.0, 7.0};
+    Aluno aluno4 = {"Ana", "2021004", 'B', 8.0, 7.5, 9.0};
+
+    // Criando um vetor de ponteiros para os alunos
+    Aluno* alunos[] = {&aluno1, &aluno2, &aluno3, &aluno4};
+
+    // Calculando a média da turma 'A'
+    float media_turma_A = media_turma(4, alunos, 'A');
+    printf("Media da turma A: %.2f\n", media_turma_A);
+
+    // Calculando a média da turma 'B'
+    float media_turma_B = media_turma(4, alunos, 'B');
+    printf("Media da turma B: %.2f\n", media_turma_B);
+
+    return 0;
+}
