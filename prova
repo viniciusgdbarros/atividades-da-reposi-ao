@@ -1,0 +1,129 @@
+1-a) Uma estrutura de dados é uma maneira organizada de armazenar e gerenciar dados em um computador, 
+de modo que eles possam ser acessados e utilizados de forma eficiente. Ela define como os dados são organizados, manipulados e armazenados na memória do computador.
+Existem várias estruturas de dados, como arrays, listas encadeadas, pilhas, filas, árvores, grafos, entre outras, cada uma com suas próprias características e métodos de acesso. 
+A escolha da estrutura de dados adequada depende do problema a ser resolvido e dos requisitos de desempenho e eficiência.
+
+b) Um Tipo Abstrato de Dados (TAD) é uma abstração matemática que define um conjunto de valores possíveis e um conjunto de operações sobre esses valores. 
+Ele encapsula os dados e as operações que podem ser realizadas neles, ocultando os detalhes de implementação subjacentes. 
+Em essência, um TAD fornece uma interface para manipular os dados sem revelar os detalhes de como essas operações são implementadas.
+Em resumo, um TAD fornece uma maneira de pensar sobre os dados e as operações que podem ser realizadas neles de forma abstrata, sem se preocupar com os detalhes de implementação.
+
+2- p=&y; Agora p aponta para y
+    x=*p; // x é atribuído com o valor de y, ou seja, x = 1
+    x = 4; // x é reatribuído com 4
+    (*p)++; // O valor apontado por p (y) é incrementado em 1, então y = 2
+    x--; // x é decrementado, x = 3
+    (*p)+=x; // O valor apontado por p (y) é aumentado por x, então y = 5
+    cout <<"x="<<x<<"y="<<y<< endl; // Imprime x=3 e y=5
+    return 0;
+3-
+#include <stdio.h>
+
+int negativos(float *vet, int n){
+    int count = 0;
+    for (int i = 0; i<n; i++){
+        if(vet[i]<0)
+            count ++;
+    
+    }
+    return count;
+}
+
+int main(){
+    float v[5]= {-2, 3, -4, -5, -6};
+
+    printf("a quantidade de numeros negativos e de: %d", negativos(v, 5));
+    return 0;
+}
+
+4-
+#include <stdio.h>
+
+int* n_impares(int n){
+   int *vet = calloc(n, sizeof(int));
+   int numero = 1;
+        for(int i=0; i<n; i++){
+            vet[i] = numero;
+            numero+=2;
+        }
+   return vet;         
+}
+
+
+int main(){
+    int n;
+    printf("informe o numero de elementos do vetor: ");
+    scanf("%d", &n);
+    int* vet= n_impares(n);
+    printf("os numeros do vetor sao: {");
+    for(int j=0; j<n;j++){
+        printf("%d, ", vet[j]);
+    
+    }
+    printf("}");
+    return 0;
+}
+
+
+5- 
+#include <stdio.h>
+#include "atividaderep.h"
+
+struct Complexo{
+    int a;
+    int b;
+};
+
+Complexo* cria(int a, int b){
+    Complexo* n = calloc(sizeof(Complexo));
+    n->a= a;
+    n->b= b;
+    return n;
+}
+
+
+void libera_complexo(Complexo* n){
+    free(n);
+}
+
+Complexo* soma(Complexo *a, Complexo *b){
+    Complexo *c = cria((a->a+b->a), (a->b+b->b));
+
+    return c;
+}
+
+
+Complexo* subtrai(Complexo *a, Complexo *b){
+    Complexo *c = cria((a->a-b->a), (a->b-b->b));
+    
+    return c;
+}
+
+Complexo* multiplica(Complexo *a, Complexo *b){
+    Complexo *c = cria((a->a*b->a) - (a->b*b->b), (a->b*b->a) + (a->a*b->b));
+
+    return c;
+}
+
+Complexo* divide(Complexo *n1, Complexo *n2){
+    int a = ((n1->a * n2->a) + (n1->b * n2->b)) / ((n2->a * n2->a) + (n2->b * n2->b));
+    int b = ((n1->b * n2->a)+(n1->a * n2->b))/((n2->a * n2->a) + (n2->b * n2->b));
+    Complexo *n = criaComplexo(a, b);
+    return n;
+}
+
+
+void imprimeComplexo(Complexo *n){
+  std::cout << n->a << " + " << n->b << "i" << std::endl;
+};
+
+
+typedef struct Complexo Complexo;
+
+Complexo *cria(int a, int b);
+void libera_complexo(Complexo *n);
+Complexo *soma(Complexo *a, Complexo *b);
+Complexo *subtrai(Complexo *a, Complexo *b);
+Complexo *multiplica(Complexo *a, Complexo *b);
+Complexo *divide(Complexo *a, Complexo *b);
+void imprimeComplexo(Complexo *n);
