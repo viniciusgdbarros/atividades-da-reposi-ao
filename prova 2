@@ -1,0 +1,121 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct no{
+    int val;
+    struct no *next;
+}No;
+typedef struct list{
+   
+    No* begin;
+    size_t size;
+}List;
+
+typedef struct nodp{
+    int val;
+    struct no *next;
+    struct no *prev;
+}Nodp;
+
+typedef struct listdp{
+   
+    Nodp* begin;
+    Nodp* end;
+    size_t size;
+}Listdp;
+-1- buscar um elemento numa lista simples e remover:
+void retira_n (List* a, int x){
+    No* pos = a->begin;
+    No* prev = NULL;
+    if(a->begin == NULL){
+        printf("lista vazia");
+    }
+    else{ 
+        while(pos->val!=x){
+        prev = pos;
+        pos = pos->next;
+    }
+        prev->next = pos->next;
+        pos = NULL;
+    }
+    
+    }
+-2- transforma lista simples em circular
+void para_circular (List* a){
+    if(a->begin == NULL){
+        printf("lista vazia.");
+    }else {
+        No* p = a->begin;
+        while(p->next != NULL){
+            p = p->next;
+        }
+            p->next = a->begin;
+    }
+}
+
+-3- remove inicio e remove fim de lista duplamente encadeada.
+-4- s funções de fila são responsáveis por operações básicas de manipulação de uma fila, que é uma estrutura de dados do tipo FIFO (First In, First Out), ou seja, o primeiro elemento inserido na fila é o primeiro a ser removido.
+  As principais funções de fila incluem:
+enqueue(): Esta função é usada para adicionar um elemento ao final da fila.
+dequeue(): Esta função é usada para remover e retornar o elemento no início da fila.
+isEmpty(): Verifica se a fila está vazia.
+isFull(): Verifica se a fila está cheia. (Geralmente não é necessária em implementações com listas encadeadas, mas é útil em implementações com arrays estáticos).
+peek(): Retorna o elemento no início da fila sem removê-lo.
+Para implementar uma fila com uma lista encadeada em C, você precisa criar uma estrutura para representar um nó da lista, que conterá o dado a ser armazenado e um ponteiro para o próximo nó na fila. A fila em si também precisará armazenar ponteiros para o primeiro e último nós da lista.
+Ao adicionar um elemento à fila, você cria um novo nó com o dado fornecido e o insere no final da lista encadeada, atualizando os ponteiros conforme necessário.
+Para remover um elemento da fila, você remove o nó no início da lista encadeada e atualiza o ponteiro para o primeiro nó.
+5-
+a) As funções de pilha são responsáveis por operações básicas de manipulação de uma pilha, que é uma estrutura de dados do tipo LIFO (Last In, First Out), ou seja, o último elemento inserido na pilha é o primeiro a ser removido.
+As principais funções de pilha incluem:
+push(): Adiciona um novo elemento no topo da pilha.
+pop(): Remove e retorna o elemento no topo da pilha.
+isEmpty(): Verifica se a pilha está vazia.
+isFull(): Verifica se a pilha está cheia. (Geralmente não é necessária em implementações com listas encadeadas, mas é útil em implementações com arrays estáticos).
+peek(): Retorna o elemento no topo da pilha sem removê-lo.
+#ifndef STACK_H
+#define STACK_H
+
+typedef struct stack_element{
+
+    int data;
+   Node* next;
+   
+} StackElement;
+
+
+typedef struct {
+    StackElement* elements; 
+    int capacity;           
+    int size;               
+    int top;                
+} Stack;
+
+Stack* createStack(int capacity);
+void destroyStack(Stack* stack);
+int push(Stack* stack, StackElement element);
+StackElement pop(Stack* stack);
+int isEmpty(Stack* stack);
+int isFull(Stack* stack);
+StackElement peek(Stack* stack);
+
+#endif /* STACK_H */
+
+b) Bool esta_balanceada(char[]* c, int tam){
+    char analise;
+    pilha* p = cria_pilha();
+    for(int i = 0; i<tam; i++){
+        analise = strcpy(c[i]);
+        if(analise == "[" || analise == "{" || analise == "["){
+            push_pilha(p, analise);
+        }else{
+            if(analise "]" && topo(p) == "["){
+                pop_pilha(p);
+            }else if(analise "}" && topo(p)== "{"){
+                pop_pilha(p);
+            }else if (analise ")" && topo(p)== "("){
+                pop_pilha(p);
+            }
+        }
+
+    }
+    return pilha_vazia(p);
+}
