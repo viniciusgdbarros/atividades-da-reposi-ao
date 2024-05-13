@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+-1- //#include <stdio.h>
+int mdc(int a, int b){
+    if (b==0)
+        return a;
+    else if(b>0)
+            return mdc(b, a%b);
+        else
+            return mdc (a, -b);
+}
+
+-2-
+a)13/20\28/22 raiz35/39/51
+b)começaríamos pela raíz, caso fosse o número que queríamos, retornaríamos ele, como não é, como é menor que a raiz, iremos para o nó a sua esquerda, ele é o que queremos, logo
+retornamos ele. Em termos de função, escreveríamos uma de busca começando pela raiz, como não está na raiz e é menor que ele, faríamos uma recursão na função para o
+elemento a esquerda da raiz.
+c)o elemento 35 é a raíz, logo, iriamos para o primeiro no a sua esquerda, o 20, e iriamos para o nó mais a direita do 20, que seria 28. o 28 seria entao a nova raiz,
+o no a direita do 20 passaria a ser o 22, que era o no ligado ao 28 e o 35 é removido.
+
+3- insere 35, insere 39, insere 51: 35\39\51; rotaçao a esquerda: 35/39\51; insere 20, insere 13, rotaçao a direita: 13/20\35/28 raiz39\51; insere 28, rotaçao dupla a direita
+e insere o 22: 13/20\28/22 raiz 35\39\51.
+
+4-a)
+b)  pilha:abcfedgih; proc: higdefcba 
+c)fila: bcdfhegi; proc: abcdfhegi.
