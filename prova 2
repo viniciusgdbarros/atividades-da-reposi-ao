@@ -53,6 +53,32 @@ void para_circular (List* a){
 }
 
 -3- remove inicio e remove fim de lista duplamente encadeada.
+void retira_inicio(Lista2* l) {
+    if (l->first != NULL) {
+        Node* temp = l->first;
+        l->first = l->first->next;
+        if (l->first != NULL) {
+            l->first->prev = NULL;
+        } else {
+            l->last = NULL;
+        }
+        free(temp);
+    }
+}
+
+// Função para retirar um elemento do final da lista
+void retira_final(Lista2* l) {
+    if (l->last != NULL) {
+        Node* temp = l->last;
+        l->last = l->last->prev;
+        if (l->last != NULL) {
+            l->last->next = NULL;
+        } else {
+            l->first = NULL;
+        }
+        free(temp);
+    }
+}
 -4- s funções de fila são responsáveis por operações básicas de manipulação de uma fila, que é uma estrutura de dados do tipo FIFO (First In, First Out), ou seja, o primeiro elemento inserido na fila é o primeiro a ser removido.
   As principais funções de fila incluem:
 enqueue(): Esta função é usada para adicionar um elemento ao final da fila.
